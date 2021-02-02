@@ -35,8 +35,33 @@ const userController = {
     )
   },
   //add a new friend to list
-  
- 
+  addfriend(req, res) {
+    User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet:{ friends: req.params.friendId } }, { new: true })
+    .then((dbFriendData) => {
+      if (!dbFriendData) {
+        return res,status(404).json({ message: 'No user with this id exists'})
+      }
+      res.json(dbFriendData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+  },
+ //delete friend from friends list
+ deleteFriend( req, res ) {
+    User.findOneAndUpdate({ _id: req.params.userId }, { $pull: { friends: req.params.friendId }}, { new: true }) 
+      .then((dbFriendData) => {
+        if (!dbFriendData) {
+          return res,status(404).json({ message: 'No user with this id exists'})
+        }
+        res.json(dbFriendData);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+ },
   // delete user 
   deleteUser({ params }, res) {
     User.findOneAndDelete({ _id: params.id })
