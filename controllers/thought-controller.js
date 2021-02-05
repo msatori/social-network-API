@@ -33,23 +33,25 @@ const thoughtController = {
     //create a single thought 
     createNewThought(req, res) {
         Thought.create(req.body)
-            .then((dbThoughtData) => {
-                return User.findOneAndUpdate(
-                    { _id: req.body.userId },
-                    { $push: { thoughts: dbThoughtData._id } },
-                    { $new: true }
-                );
-            })
-            .then((dbuserData) => {
-                if (!dbuserData) {
-                    return res.status(404).json({ message: 'Thought created, No user with this id ' })
-                }
-                res.json({ message: ' Successfully created thought ' })
-            })
-            .catch((err) => {
-                console.log(err);
-                res.status(500).json(err)
-            });
+          .then((dbThoughtData) => {
+            return User.findOneAndUpdate(
+              { _id: req.body.userId },
+              { $push: { thoughts: dbThoughtData._id } },
+              { new: true }
+            );
+          })
+          .then((dbUserData) => {
+            if (!dbUserData) {
+              return res.status(404).json({ message: 'No User ID Match' });
+            }
+    
+            res.json({ message: 'Thought successfully created!' });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+    
     },
 
     //edit thought 

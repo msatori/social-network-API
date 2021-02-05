@@ -12,8 +12,8 @@ const userController = {
   },
 
   // get one user by id
-  getUserById({ params }, res) {
-    User.findOne({ _id: params.id })
+  getUserById( req, res) {
+    User.findOne({ _id: req.params.userId })
       .then(dbUserData => res.json(dbUserData))
       .catch(err => {
         console.log(err);
