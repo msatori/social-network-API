@@ -17,17 +17,18 @@ const thoughtController = {
     //get single thought by id
     getThoughtById(req, res) {
         Thought.findOne({ _id: req.params.thoughtId })
-            .then((dbThoughtData) => {
-                if (!dbThoughtData) {
-                    return res.status(404).json({ message: 'No thought with this id exists' })
-                }
-                res.json(dbThoughtData);
-            })
-            .catch((err) => {
-                console.log(err);
-                res.status(500).json(err)
-            });
-    },
+          .then((dbThoughtData) => {
+            if (!dbThoughtData) {
+              return res.status(404).json({ message: 'No thought with this id!' });
+            }
+            res.json(dbThoughtData);
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+      },
+    
 
     //create a single thought 
     createNewThought(req, res) {
@@ -98,15 +99,15 @@ const thoughtController = {
 
     //add a reaction to a thought 
     addReaction(req, res) {
-        Thought.findByIdAndUpdate(
-            { _id: req.body.thoughtId },
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
             { $addToSet: { reactions: req.body } },
             { runvalidators: true, new: true }
         )
 
             .then((dbThoughtData) => {
                 if (!dbThoughtData) {
-                    return res.status(404).json({ message: 'No thought with this id.' })
+                    return res.status(404).json({ message: 'No thought with this id.' });
                 }
                 res.json({dbThoughtData})
             })
