@@ -19,7 +19,7 @@
   ## Installation
     npm install
     
-[![Application Demo](/assets/Demo.png)](https://drive.google.com/file/d/1cr-6uwaCtQHIIiL532Y91nZjZtVhTI7F/view?usp=sharing "App Demo")
+[![Application Demo](./assets/Demo.png)](https://drive.google.com/file/d/1cr-6uwaCtQHIIiL532Y91nZjZtVhTI7F/view?usp=sharing "App Demo")
   ## Usage 
     This is intended for any social network project.
 
